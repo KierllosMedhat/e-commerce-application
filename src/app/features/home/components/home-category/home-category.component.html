@@ -1,0 +1,16 @@
+<section class="py-5 mx-auto container" >
+    <app-section-title 
+    title="shop by" 
+    hightlight="category">
+    </app-section-title>
+    
+    <!-- CARDS -->
+<div class="grid grid-col-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+    @for (category of categoryList(); track category._id) {
+        <div class="shadow rounded p-4 flex flex-col items-center">
+            <img [src]="category.image" [alt]="category.name" class="size-16 rounded-full">
+            <h3>{{category.name}}</h3>
+        </div>
+    }
+    </div>
+</section>
