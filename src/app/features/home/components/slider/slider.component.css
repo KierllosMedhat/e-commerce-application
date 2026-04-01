@@ -1,0 +1,26 @@
+.item {
+  background-image: url(/home-slider-1.d79601a8.png);
+  background-color: linear-gradient(to right, #22c55e, #4ade80);
+  background-blend-mode: overlay;
+  background-position: center;
+  background-size: cover;
+}
+
+swiper-container::part(button-next), swiper-container::part(button-prev) {
+    color:#22c55e;
+    background-color: white;
+    padding:0.5rem;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+}
+
+swiper-container::part(bullet) {
+    background-color: white;
+    width: 0.5rem;
+    height: 0.5rem;
+}
+
+swiper-container::part(bullet-active) {
+    background-color: white;
+}
