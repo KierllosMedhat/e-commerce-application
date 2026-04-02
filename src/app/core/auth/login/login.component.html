@@ -1,1 +1,141 @@
-<p>login works!</p>
+<main class="py-10">
+  <div class="container max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 p-4">
+    <div class="bg-white rounded-2xl shadow-lg px-6 py-10">
+      <div class="text-center mb-8">
+        <div class="flex items-center justify-center mb-4">
+          <span class="text-3xl font-bold text-primary"
+            >Fresh<span class="text-gray-800">Cart</span></span
+          >
+        </div>
+        <h1 class="text-2xl font-bold text-gray-800 mb-2">Welcome Back!</h1>
+        <p class="text-gray-600">Sign in to continue your fresh shopping experience</p>
+      </div>
+      <div class="login-options flex gap-2 *:grow my-10">
+        <button
+          type="button"
+          class="btn bg-transparent border border-gray-300 py-2 rounded shadow-sm font-semibold hover:bg-gray-100 flex justify-center items-center disabled:opacity-50 disabled:cursor-not-allowed"
+          aria-label="Sign up with Google"
+        >
+          <svg
+            data-prefix="fab"
+            data-icon="google"
+            class="svg-inline--fa fa-google me-2 text-red-600 size-4"
+            role="img"
+            viewBox="0 0 512 512"
+            aria-hidden="true"
+          >
+            <path
+              fill="currentColor"
+              d="M500 261.8C500 403.3 403.1 504 260 504 122.8 504 12 393.2 12 256S122.8 8 260 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9c-88.3-85.2-252.5-21.2-252.5 118.2 0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9l-140.8 0 0-85.3 236.1 0c2.3 12.7 3.9 24.9 3.9 41.4z"
+            ></path>
+          </svg>
+          <span>Google</span></button
+        ><button
+          type="button"
+          class="btn bg-transparent border border-gray-300 py-2 rounded shadow-sm font-semibold hover:bg-gray-100 flex justify-center items-center disabled:opacity-50 disabled:cursor-not-allowed"
+          aria-label="Sign up with Facebook"
+        >
+          <svg
+            data-prefix="fab"
+            data-icon="facebook"
+            class="svg-inline--fa fa-facebook me-2 size-4 text-blue-600"
+            role="img"
+            viewBox="0 0 512 512"
+            aria-hidden="true"
+          >
+            <path
+              fill="currentColor"
+              d="M512 256C512 114.6 397.4 0 256 0S0 114.6 0 256C0 376 82.7 476.8 194.2 504.5l0-170.3-52.8 0 0-78.2 52.8 0 0-33.7c0-87.1 39.4-127.5 125-127.5 16.2 0 44.2 3.2 55.7 6.4l0 70.8c-6-.6-16.5-1-29.6-1-42 0-58.2 15.9-58.2 57.2l0 27.8 83.6 0-14.4 78.2-69.3 0 0 175.9C413.8 494.8 512 386.9 512 256z"
+            ></path>
+          </svg>
+          <span>Facebook</span>
+        </button>
+      </div>
+      <div
+        class="divider relative w-full h-0.5 bg-gray-300/30 my-4 flex items-center before:content-['or'] before:absolute before:top-1/2 before:left-1/2 before:-translate-1/2 before:bg-white before:px-4"
+        aria-hidden="true"
+      >
+        <span class="sr-only">or continue with email</span>
+      </div>
+      <form class="space-y-7" [formGroup]="loginForm" (ngSubmit)="login()">
+        <div class="flex flex-col gap-2">
+          <label for="email">Email*</label
+          ><input
+            id="email"
+            formControlName="email"
+            class="form-control rounded-lg shadow-sm border-gray-300 focus:ring-primary focus:border-primary"
+            placeholder="ali@example.com"
+            autocomplete="email"
+            aria-invalid="false"
+            type="email"
+            name="email"
+          />
+          @if (loginForm.get('email')?.getError('required') && loginForm.get('email')?.touched) {
+            <div class="text-red-500 text-sm">Email is required</div>
+          }
+          @if (loginForm.get('email')?.getError('email') && loginForm.get('email')?.touched) {
+            <div class="text-red-500 text-sm">Email is invalid</div>
+          }
+        </div>
+        <div class="flex flex-col gap-2">
+          <div class="flex flex-col gap-2">
+            <label for="password">Password*</label
+            ><input
+              id="password"
+              formControlName="password"
+              class="form-control rounded-lg shadow-sm border-gray-300 focus:ring-primary focus:border-primary"
+              placeholder="Enter your password"
+              autocomplete="new-password"
+              aria-invalid="false"
+              type="password"
+              name="password"
+            />
+            @if (
+              loginForm.get('password')?.getError('required') && loginForm.get('password')?.touched
+            ) {
+              <div class="text-red-500 text-sm">Password is required</div>
+            }
+            @if (
+              loginForm.get('password')?.getError('pattern') && loginForm.get('password')?.touched
+            ) {
+              <div class="text-red-500 text-sm">Password is invalid</div>
+            }
+          </div>
+          <button
+            [disabled]="loginForm.invalid"
+            type="submit"
+            class="btn bg-primary p-2 rounded-lg shadow-lg text-white hover:cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed w-full transition-colors"
+            aria-busy="false"
+          >
+            <svg
+              data-prefix="fas"
+              data-icon="user-plus"
+              class="svg-inline--fa fa-user-plus size-4 me-2 inline"
+              role="img"
+              viewBox="0 0 640 512"
+              aria-hidden="true"
+            >
+              <path
+                fill="currentColor"
+                d="M136 128a120 120 0 1 1 240 0 120 120 0 1 1 -240 0zM48 482.3C48 383.8 127.8 304 226.3 304l59.4 0c98.5 0 178.3 79.8 178.3 178.3 0 16.4-13.3 29.7-29.7 29.7L77.7 512C61.3 512 48 498.7 48 482.3zM544 96c13.3 0 24 10.7 24 24l0 48 48 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-48 0 0 48c0 13.3-10.7 24-24 24s-24-10.7-24-24l0-48-48 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l48 0 0-48c0-13.3 10.7-24 24-24z"
+              ></path>
+            </svg>
+            <span>Login</span>
+          </button>
+          @if (errorMsg()) {
+            <div class="text-red-500 text-sm">{{ errorMsg() }}</div>
+          }
+          @if (successMsg()) {
+            <div class="text-green-500 text-sm">{{ successMsg() }}</div>
+          }
+        </div>
+      </form>
+      <p class="border-t pt-10 border-gray-300/30 my-4 text-center">
+        Don't have an account?
+        <a routerLink="/register" class="text-primary hover:underline font-medium" href="/register"
+          >Sign Up</a
+        >
+      </p>
+    </div>
+  </div>
+</main>
