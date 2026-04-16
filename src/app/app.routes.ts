@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './core/auth/login/login.component';
 import { RegisterComponent } from './core/auth/register/register.component';
+import { ForgotPasswordComponent } from './features/forgot-password/forgot-password.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -11,6 +12,10 @@ export const routes: Routes = [
 
   {
     path: 'register', component:RegisterComponent, title:'FreshCart'
+  },
+
+  {
+    path: 'forget-password', component:ForgotPasswordComponent, title:'FreshCart'
   },
 
   {
