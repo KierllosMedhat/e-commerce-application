@@ -32,10 +32,11 @@ export class LoginComponent implements OnInit {
      if(this.loginForm.valid){
       this.authService.signIn(this.loginForm.value).subscribe({
         next:(res)=>{
+          localStorage.setItem('token',res.token);
           this.errorMsg.set('');
           this.successMsg.set(res.message);
           setTimeout(()=>{
-            this.router.navigate(['/login']);
+            this.router.navigate(['/home']);
           },2000);
         },
         error:(err)=>{

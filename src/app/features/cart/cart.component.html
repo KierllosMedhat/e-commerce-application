@@ -1,1 +1,355 @@
-<p>cart works!</p>
+@if (isEmpty()) {
+  <div class="min-h-[60vh] flex items-center justify-center px-4">
+    <div class="max-w-md text-center">
+      <div class="relative mb-8">
+        <div class="w-32 h-32 rounded-full bg-gray-100 flex items-center justify-center mx-auto">
+          <svg
+            data-prefix="fas"
+            data-icon="box-open"
+            class="svg-inline--fa fa-box-open text-5xl text-gray-300 size-20"
+            role="img"
+            viewBox="0 0 640 512"
+            aria-hidden="true"
+          >
+            <path
+              fill="currentColor"
+              d="M560.3 237.2c10.4 11.8 28.3 14.4 41.8 5.5 14.7-9.8 18.7-29.7 8.9-44.4l-48-72c-2.8-4.2-6.6-7.7-11.1-10.2L351.4 4.7c-19.3-10.7-42.8-10.7-62.2 0L88.8 116c-5.4 3-9.7 7.4-12.6 12.8L27.7 218.7c-12.6 23.4-3.8 52.5 19.6 65.1l33 17.7 0 53.3c0 23 12.4 44.3 32.4 55.7l176 99.7c19.6 11.1 43.5 11.1 63.1 0l176-99.7c20.1-11.4 32.4-32.6 32.4-55.7l0-117.5zm-240-9.8L170.2 144 320.3 60.6 470.4 144 320.3 227.4zm-41.5 50.2l-21.3 46.2-165.8-88.8 25.4-47.2 161.7 89.8z"
+            ></path>
+          </svg>
+        </div>
+      </div>
+      <h2 class="text-2xl font-bold text-gray-900 mb-3">Your cart is empty</h2>
+      <p class="text-gray-500 mb-8 leading-relaxed">
+        Looks like you haven't added anything to your cart yet.<br />Start exploring our products!
+      </p>
+      <a
+        class="inline-flex items-center gap-2 bg-primary text-white py-3.5 px-8 rounded-xl font-semibold hover:bg-primary-700 transition-all shadow-lg active:scale-[0.98]"
+        href="/"
+        >Start Shopping<svg
+          data-prefix="fas"
+          data-icon="arrow-right"
+          class="svg-inline--fa fa-arrow-right text-sm size-5"
+          role="img"
+          viewBox="0 0 512 512"
+          aria-hidden="true"
+        >
+          <path
+            fill="currentColor"
+            d="M502.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l370.7 0-105.4 105.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"
+          ></path>
+        </svg>
+      </a>
+    </div>
+  </div>
+
+} @else {
+  <div class="bg-gray-50 min-h-screen py-8">
+    <div class="container mx-auto px-4">
+      <div class="mb-8">
+        <nav class="flex items-center gap-2 text-sm text-gray-500 mb-4">
+          <a class="hover:text-primary transition" routerLink="/home">Home</a><span>/</span
+          ><span class="text-gray-900 font-medium">Shopping Cart</span>
+        </nav>
+        <div class="flex items-center justify-between">
+          <div>
+            <h1 class="text-3xl font-bold text-gray-900 flex items-center gap-3">
+              <span
+                class="bg-primary text-white w-12 h-12 rounded-xl flex items-center justify-center"
+                ><svg
+                  data-prefix="fas"
+                  data-icon="cart-shopping"
+                  class="svg-inline--fa fa-cart-shopping size-7"
+                  role="img"
+                  viewBox="0 0 640 512"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M24-16C10.7-16 0-5.3 0 8S10.7 32 24 32l45.3 0c3.9 0 7.2 2.8 7.9 6.6l52.1 286.3c6.2 34.2 36 59.1 70.8 59.1L456 384c13.3 0 24-10.7 24-24s-10.7-24-24-24l-255.9 0c-11.6 0-21.5-8.3-23.6-19.7l-5.1-28.3 303.6 0c30.8 0 57.2-21.9 62.9-52.2L568.9 69.9C572.6 50.2 557.5 32 537.4 32l-412.7 0-.4-2c-4.8-26.6-28-46-55.1-46L24-16zM208 512a48 48 0 1 0 0-96 48 48 0 1 0 0 96zm224 0a48 48 0 1 0 0-96 48 48 0 1 0 0 96z"
+                  ></path></svg></span
+              >Shopping Cart
+            </h1>
+            <p class="text-gray-500 mt-2">
+              You have <span class="font-semibold text-primary">{{cartDetails().numOfCartItems}} item</span> in your cart
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="lg:col-span-2">
+          <div class="space-y-4">
+        @for (item of cartDetails()?.data?.products; track $index) {
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 sm:p-5">
+              <div class="flex gap-4 sm:gap-6">
+                <a class="relative shrink-0 group" routerLink="/products/{{item.product._id}}"
+                  ><div
+                    class="w-28 h-28 sm:w-32 sm:h-32 rounded-xl bg-gray-50 p-3 border border-gray-100 overflow-hidden"
+                  >
+                    <img
+                      alt="{{item.product.title}}"
+                      class="w-full h-full object-contain transition-transform duration-300 group-hover:scale-110"
+                      [src]="item.product.imageCover"
+                    /></div
+                ></a>
+                <div class="flex-1 min-w-0 flex flex-col">
+                  <div class="mb-3">
+                    <a class="group/title" routerLink="/products/{{item.product._id}}"
+                      ><h3
+                        class="font-semibold text-gray-900 group-hover/title:text-primary transition-colors leading-relaxed text-base sm:text-lg"
+                      >
+                        {{item.product.title}}
+                      </h3></a
+                    >
+                    <div class="flex items-center gap-2 mt-2">
+                      <span
+                        class="inline-block px-2.5 py-1 bg-primary/10 font-semibold text-primary text-xs font-medium rounded-full"
+                        >{{item.product.category.name}}</span
+                      >
+                    </div>
+                  </div>
+                  <div class="mb-4">
+                    <span class="text-primary font-bold text-lg">{{item.price}} EGP</span>
+                  </div>
+                  <div class="mt-auto flex flex-wrap items-center justify-between gap-4">
+                    <div class="flex items-center bg-gray-50 rounded-xl p-1 border border-gray-200">
+                      <button
+                        (click)="updateCount(item.product._id,item.count-1)"
+                        [disabled]="item.count === 1"
+                        class="h-8 w-8 rounded-lg bg-white shadow-sm flex items-center justify-center text-gray-500 hover:text-gray-700 disabled:opacity-40 transition-all"
+                      >
+                        <svg
+                          data-prefix="fas"
+                          data-icon="minus"
+                          class="svg-inline--fa fa-minus text-xs size-5"
+                          role="img"
+                          viewBox="0 0 448 512"
+                          aria-hidden="true"
+                        >
+                          <path
+                            fill="currentColor"
+                            d="M0 256c0-17.7 14.3-32 32-32l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 288c-17.7 0-32-14.3-32-32z"
+                          ></path>
+                        </svg></button
+                      ><span class="w-12 text-center font-bold text-gray-900">{{item.count}}</span
+                      ><button
+                        (click)="updateCount(item.product._id,item.count+1)"
+                        class="h-8 w-8 rounded-lg bg-primary shadow-sm flex items-center justify-center text-white hover:bg-primary transition-all"
+                      >
+                        <svg
+                          data-prefix="fas"
+                          data-icon="plus"
+                          class="svg-inline--fa fa-plus text-xs size-5"
+                          role="img"
+                          viewBox="0 0 448 512"
+                          aria-hidden="true"
+                        >
+                          <path
+                            fill="currentColor"
+                            d="M256 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 160-160 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l160 0 0 160c0 17.7 14.3 32 32 32s32-14.3 32-32l0-160 160 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-160 0 0-160z"
+                          ></path>
+                        </svg>
+                      </button>
+                    </div>
+                    <div class="flex items-center gap-4">
+                      <div class="text-right">
+                        <p class="text-xs text-gray-400 mb-0.5">Total</p>
+                        <p class="text-xl font-bold text-gray-900">
+                          {{item.price * item.count}} <span class="text-sm font-medium text-gray-400">EGP</span>
+                        </p>
+                      </div>
+                      <button
+                        (click)="removeItem(item.product._id)"
+                        class="h-10 w-10 rounded-xl border border-red-200 bg-red-50 text-red-500 hover:bg-red-500 hover:text-white hover:border-red-500 flex items-center justify-center transition-all duration-200"
+                        title="Remove item"
+                      >
+                        <svg
+                          data-prefix="fas"
+                          data-icon="trash"
+                          class="svg-inline--fa fa-trash text-sm size-5"
+                          role="img"
+                          viewBox="0 0 448 512"
+                          aria-hidden="true"
+                        >
+                          <path
+                            fill="currentColor"
+                            d="M136.7 5.9L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-8.7-26.1C306.9-7.2 294.7-16 280.9-16L167.1-16c-13.8 0-26 8.8-30.4 21.9zM416 144L32 144 53.1 467.1C54.7 492.4 75.7 512 101 512L347 512c25.3 0 46.3-19.6 47.9-44.9L416 144z"
+                          ></path>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        }
+          </div>
+          <div class="mt-6 pt-6 border-t border-gray-200 flex items-center justify-between">
+            <a
+              class="text-primary/80 hover:text-primary font-medium text-sm flex items-center gap-2"
+              routerLink="/home"
+              ><span>←</span> Continue Shopping</a
+            ><button
+              (click)="clearCart()"
+              class="group flex items-center gap-2 text-sm text-gray-400 hover:text-red-500 transition-colors"
+            >
+              <svg
+                data-prefix="fas"
+                data-icon="trash"
+                class="svg-inline--fa fa-trash text-xs size-5 group-hover:scale-110 transition-transform"
+                role="img"
+                viewBox="0 0 448 512"
+                aria-hidden="true"
+              >
+                <path
+                  fill="currentColor"
+                  d="M136.7 5.9L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-8.7-26.1C306.9-7.2 294.7-16 280.9-16L167.1-16c-13.8 0-26 8.8-30.4 21.9zM416 144L32 144 53.1 467.1C54.7 492.4 75.7 512 101 512L347 512c25.3 0 46.3-19.6 47.9-44.9L416 144z"
+                ></path>
+            </svg>
+            <span>Clear all items</span>
+            </button>
+          </div>
+        </div>
+        <div class="lg:col-span-1">
+          <div
+            class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden sticky top-4"
+          >
+            <div class="bg-gray-900 p-5">
+              <h2 class="text-white font-bold text-lg">Order Summary</h2>
+            </div>
+            <div class="p-5 space-y-4">
+              <div class="flex justify-between text-gray-600">
+                <span>Subtotal ({{cartDetails().numOfCartItems}} items)</span><span class="font-semibold">{{cartDetails().data.totalCartPrice}} EGP</span>
+              </div>
+              <div class="flex justify-between text-gray-600">
+                <span>Shipping</span
+                ><span class="text-green-600 font-medium">Calculated at checkout</span>
+              </div>
+              <hr class="border-gray-200" />
+              <div class="flex justify-between text-lg font-bold">
+                <span>Estimated Total</span><span class="text-primary">{{cartDetails().data.totalCartPrice}} EGP</span>
+              </div>
+              <div class="pt-4 space-y-3">
+                <a
+                  class="w-full flex items-center justify-center gap-2 bg-primary text-white py-3.5 rounded-xl font-semibold hover:bg-primary-700 transition-all"
+                  routerLink="/login"
+                  ><svg
+                    data-prefix="fas"
+                    data-icon="user"
+                    class="svg-inline--fa fa-user size-5"
+                    role="img"
+                    viewBox="0 0 448 512"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M224 248a120 120 0 1 0 0-240 120 120 0 1 0 0 240zm-29.7 56C95.8 304 16 383.8 16 482.3 16 498.7 29.3 512 45.7 512l356.6 0c16.4 0 29.7-13.3 29.7-29.7 0-98.5-79.8-178.3-178.3-178.3l-59.4 0z"
+                    ></path>
+                </svg>
+                Login to Checkout</a>
+                <p class="text-xs text-gray-400 text-center">
+                  Don't have an account?
+                  <a routerLink="/register" class="text-primary hover:underline">Sign up</a>
+                </p>
+              </div>
+              <div class="pt-4 border-t border-gray-100 space-y-2">
+                <p class="text-xs text-gray-500">✓ Your cart items will be saved</p>
+                <p class="text-xs text-gray-500">✓ Track your orders easily</p>
+                <p class="text-xs text-gray-500">✓ Access exclusive member deals</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+}
+<div class="bg-primary/10 border-t border-primary/20">
+  <div class="container mx-auto px-4 py-6">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+          <svg
+            data-prefix="fas"
+            data-icon="truck"
+            class="svg-inline--fa fa-truck text-primary text-lg size-6"
+            role="img"
+            viewBox="0 0 576 512"
+            aria-hidden="true"
+          >
+            <path
+              fill="currentColor"
+              d="M0 96C0 60.7 28.7 32 64 32l288 0c35.3 0 64 28.7 64 64l0 32 50.7 0c17 0 33.3 6.7 45.3 18.7L557.3 192c12 12 18.7 28.3 18.7 45.3L576 384c0 35.3-28.7 64-64 64l-3.3 0c-10.4 36.9-44.4 64-84.7 64s-74.2-27.1-84.7-64l-102.6 0c-10.4 36.9-44.4 64-84.7 64s-74.2-27.1-84.7-64L64 448c-35.3 0-64-28.7-64-64L0 96zM512 288l0-50.7-45.3-45.3-50.7 0 0 96 96 0zM192 424a40 40 0 1 0 -80 0 40 40 0 1 0 80 0zm232 40a40 40 0 1 0 0-80 40 40 0 1 0 0 80z"
+            ></path>
+          </svg>
+        </div>
+        <div>
+          <h4 class="font-semibold text-gray-900 text-sm">Free Shipping</h4>
+          <p class="text-gray-500 text-xs">On orders over 500 EGP</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+          <svg
+            data-prefix="fas"
+            data-icon="arrow-rotate-left"
+            class="svg-inline--fa fa-arrow-rotate-left text-primary text-lg size-6"
+            role="img"
+            viewBox="0 0 512 512"
+            aria-hidden="true"
+          >
+            <path
+              fill="currentColor"
+              d="M256 64c-56.8 0-107.9 24.7-143.1 64l47.1 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 192c-17.7 0-32-14.3-32-32L0 32C0 14.3 14.3 0 32 0S64 14.3 64 32l0 54.7C110.9 33.6 179.5 0 256 0 397.4 0 512 114.6 512 256S397.4 512 256 512c-87 0-163.9-43.4-210.1-109.7-10.1-14.5-6.6-34.4 7.9-44.6s34.4-6.6 44.6 7.9c34.8 49.8 92.4 82.3 157.6 82.3 106 0 192-86 192-192S362 64 256 64z"
+            ></path>
+          </svg>
+        </div>
+        <div>
+          <h4 class="font-semibold text-gray-900 text-sm">Easy Returns</h4>
+          <p class="text-gray-500 text-xs">14-day return policy</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+          <svg
+            data-prefix="fas"
+            data-icon="shield-halved"
+            class="svg-inline--fa fa-shield-halved text-primary text-lg size-6"
+            role="img"
+            viewBox="0 0 512 512"
+            aria-hidden="true"
+          >
+            <path
+              fill="currentColor"
+              d="M256 0c4.6 0 9.2 1 13.4 2.9L457.8 82.8c22 9.3 38.4 31 38.3 57.2-.5 99.2-41.3 280.7-213.6 363.2-16.7 8-36.1 8-52.8 0-172.4-82.5-213.1-264-213.6-363.2-.1-26.2 16.3-47.9 38.3-57.2L242.7 2.9C246.9 1 251.4 0 256 0zm0 66.8l0 378.1c138-66.8 175.1-214.8 176-303.4l-176-74.6 0 0z"
+            ></path>
+          </svg>
+        </div>
+        <div>
+          <h4 class="font-semibold text-gray-900 text-sm">Secure Payment</h4>
+          <p class="text-gray-500 text-xs">100% secure checkout</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+          <svg
+            data-prefix="fas"
+            data-icon="headset"
+            class="svg-inline--fa fa-headset text-primary text-lg size-6"
+            role="img"
+            viewBox="0 0 448 512"
+            aria-hidden="true"
+          >
+            <path
+              fill="currentColor"
+              d="M224 64c-79 0-144.7 57.3-157.7 132.7 9.3-3 19.3-4.7 29.7-4.7l16 0c26.5 0 48 21.5 48 48l0 96c0 26.5-21.5 48-48 48l-16 0c-53 0-96-43-96-96l0-64C0 100.3 100.3 0 224 0S448 100.3 448 224l0 168.1c0 66.3-53.8 120-120.1 120l-87.9-.1-32 0c-26.5 0-48-21.5-48-48s21.5-48 48-48l32 0c26.5 0 48 21.5 48 48l0 0 40 0c39.8 0 72-32.2 72-72l0-20.9c-14.1 8.2-30.5 12.8-48 12.8l-16 0c-26.5 0-48-21.5-48-48l0-96c0-26.5 21.5-48 48-48l16 0c10.4 0 20.3 1.6 29.7 4.7-13-75.3-78.6-132.7-157.7-132.7z"
+            ></path>
+          </svg>
+        </div>
+        <div>
+          <h4 class="font-semibold text-gray-900 text-sm">24/7 Support</h4>
+          <p class="text-gray-500 text-xs">Contact us anytime</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
